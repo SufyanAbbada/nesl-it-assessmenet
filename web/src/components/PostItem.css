@@ -1,0 +1,196 @@
+.post-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.post-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-name {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.post-date {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.delete-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.delete-button:hover {
+  background: #fecaca;
+  transform: scale(1.1);
+}
+
+.post-content {
+  color: #374151;
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.admin-badge {
+  margin-top: 12px;
+  padding: 4px 8px;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #fbbf24;
+}
+
+
+.toast-confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast-message {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toast-message strong {
+  color: #1f2937;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.toast-message p {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
+}
+
+.toast-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.toast-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.toast-button-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.toast-button-cancel:hover {
+  background: #e5e7eb;
+}
+
+.toast-button-confirm {
+  background: #ef4444;
+  color: white;
+}
+
+.toast-button-confirm:hover {
+  background: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .post-item {
+    padding: 16px;
+  }
+  
+  .author-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .author-name {
+    font-size: 14px;
+  }
+  
+  .post-date {
+    font-size: 12px;
+  }
+  
+  .post-content {
+    font-size: 15px;
+  }
+  
+  .delete-button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+  
+  .toast-actions {
+    flex-direction: column;
+  }
+  
+  .toast-button {
+    width: 100%;
+  }
+}
