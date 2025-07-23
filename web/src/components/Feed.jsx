@@ -1,8 +1,8 @@
+import PostItem from "./PostItem";
 import { useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../context/useAuth";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { Toaster } from "react-hot-toast";
-import PostItem from "./PostItem";
 import "./Feed.css";
 
 const Feed = () => {

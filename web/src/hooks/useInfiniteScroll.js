@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../context/useAuth';
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../context/useAuth";
 
 export const useInfiniteScroll = () => {
   const { token } = useAuth();
@@ -11,50 +11,55 @@ export const useInfiniteScroll = () => {
   const [page, setPage] = useState(0);
   const PAGE_LIMIT = 10;
 
-  const loadPosts = useCallback(async (pageNum = 0, reset = false) => {
-    if (loading || (!hasMore && !reset)) return;
+  const loadPosts = useCallback(
+    async (pageNum = 0, reset = false) => {
+      if (loading || (!hasMore && !reset)) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/feed?skip=${pageNum * PAGE_LIMIT}&limit=10`,
-        {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/feed?skip=${
+            pageNum * PAGE_LIMIT
+          }&limit=10`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          toast.error("Failed to load posts");
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      );
 
-      if (!response.ok) {
-        toast.error('Failed to load posts');
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        const newPosts = await response.json();
 
-      const newPosts = await response.json();
-      
-      if (reset) {
-        setPosts(newPosts);
-        if (newPosts.length > 0) {
-          toast.success('Feed refreshed');
+        if (reset) {
+          setPosts(newPosts);
+          if (newPosts.length > 0) {
+            toast.success("Feed refreshed");
+          }
+        } else {
+          setPosts((prev) => [...prev, ...newPosts]);
         }
-      } else {
-        setPosts(prev => [...prev, ...newPosts]);
-      }
 
-      setHasMore(newPosts.length === 10);
-      setPage(pageNum);
-    } catch (err) {
-      setError(err.message);
-      if (!reset) {
-        toast.error('Failed to load more posts');
+        setHasMore(newPosts.length === 10);
+        setPage(pageNum);
+      } catch (err) {
+        setError(err.message);
+        if (!reset) {
+          toast.error("Failed to load more posts");
+        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [token, loading, hasMore]);
+    },
+    [token, loading, hasMore]
+  );
 
   const loadMore = useCallback(() => {
     loadPosts(page + 1);
@@ -66,37 +71,40 @@ export const useInfiniteScroll = () => {
     loadPosts(0, true);
   }, [loadPosts]);
 
-  const deletePost = useCallback(async (postId) => {
-    const loadingToast = toast.loading('Deleting post...');
-    
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+  const deletePost = useCallback(
+    async (postId) => {
+      const loadingToast = toast.loading("Deleting post...");
 
-      if (response.ok) {
-        setPosts(prev => prev.filter(post => post._id !== postId));
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          setPosts((prev) => prev.filter((post) => post._id !== postId));
+          toast.dismiss(loadingToast);
+          toast.success("Post deleted successfully");
+          return { success: true };
+        } else {
+          toast.dismiss(loadingToast);
+          toast.error("Failed to delete post");
+          return { success: false, error: "Delete failed" };
+        }
+      } catch (err) {
         toast.dismiss(loadingToast);
-        toast.success('Post deleted successfully');
-        return { success: true };
-      } else {
-        toast.dismiss(loadingToast);
-        toast.error('Failed to delete post');
-        return { success: false, error: 'Delete failed' };
+        toast.error("Failed to delete post");
+        return { success: false, error: err.message };
       }
-    } catch (err) {
-      toast.dismiss(loadingToast);
-      toast.error('Failed to delete post');
-      return { success: false, error: err.message };
-    }
-  }, [token]);
+    },
+    [token]
+  );
 
   useEffect(() => {
     if (token) {

@@ -1,8 +1,8 @@
+import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { AuthContext } from "./useAuth";
 import { decodeJWT, isTokenExpired } from "../utils/jwt";
-import toast from "react-hot-toast";
-import PropTypes from "prop-types";
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);

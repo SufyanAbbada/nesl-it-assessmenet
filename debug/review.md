@@ -81,7 +81,7 @@ const postSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-await Posts.createIndexes(); // Ensure unique index is created
+await Post.init(); // Ensure unique index is created
 ```
 
 - **Explanation:** Enforcing uniqueness in the database ensures no duplicate posts are inserted in the future, making the application more resilient.

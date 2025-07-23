@@ -1,61 +1,64 @@
-import { memo } from 'react';
-import { useAuth } from '../context/useAuth';
-import toast from 'react-hot-toast';
-import PropTypes from 'prop-types';
-import './PostItem.css';
+import toast from "react-hot-toast";
+import PropTypes from "prop-types";
+import { memo } from "react";
+import { useAuth } from "../context/useAuth";
+import "./PostItem.css";
 
 const PostItem = memo(({ post, onDelete }) => {
   const { user } = useAuth();
 
-  const canDelete = user && (user.role === 'admin');
+  const canDelete = user && user.role === "admin";
 
   const handleDelete = async () => {
-    toast((t) => (
-      <div className="toast-confirmation">
-        <div className="toast-message">
-          <strong>Delete Post?</strong>
-          <p>This action cannot be undone.</p>
+    toast(
+      (t) => (
+        <div className="toast-confirmation">
+          <div className="toast-message">
+            <strong>Delete Post?</strong>
+            <p>This action cannot be undone.</p>
+          </div>
+          <div className="toast-actions">
+            <button
+              className="toast-button toast-button-cancel"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+            <button
+              className="toast-button toast-button-confirm"
+              onClick={async () => {
+                toast.dismiss(t.id);
+                await onDelete(post._id);
+              }}
+            >
+              Delete
+            </button>
+          </div>
         </div>
-        <div className="toast-actions">
-          <button
-            className="toast-button toast-button-cancel"
-            onClick={() => toast.dismiss(t.id)}
-          >
-            Cancel
-          </button>
-          <button
-            className="toast-button toast-button-confirm"
-            onClick={async () => {
-              toast.dismiss(t.id);
-              await onDelete(post._id);
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    ), {
-      duration: Infinity,
-      style: {
-        background: 'white',
-        color: '#1f2937',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        padding: '16px',
-        maxWidth: '400px',
-        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.15)',
-      },
-    });
+      ),
+      {
+        duration: Infinity,
+        style: {
+          background: "white",
+          color: "#1f2937",
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          padding: "16px",
+          maxWidth: "400px",
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
+        },
+      }
+    );
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -75,21 +78,23 @@ const PostItem = memo(({ post, onDelete }) => {
           <button
             className="delete-button"
             onClick={handleDelete}
-            title={user?.role === 'admin' ? 'Delete post (Admin)' : 'Delete your post'}
+            title={
+              user?.role === "admin"
+                ? "Delete post (Admin)"
+                : "Delete your post"
+            }
           >
             ×
           </button>
         )}
       </div>
 
-      <div className="post-content">
-        {post.content}
-      </div>
+      <div className="post-content">{post.content}</div>
     </article>
   );
 });
 
-PostItem.displayName = 'PostItem';
+PostItem.displayName = "PostItem";
 
 export default PostItem;
 

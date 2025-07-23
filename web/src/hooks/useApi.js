@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { useAuth } from '../context/useAuth';
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import { useState, useEffect, useRef } from "react";
+import { useAuth } from "../context/useAuth";
 
 // Simple in-memory cache
 const cache = new Map();
@@ -34,34 +34,34 @@ export const useApi = (resource, options = {}) => {
 
     try {
       const headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
         ...options.headers,
       };
 
       const response = await fetch(resource, {
-        method: 'GET',
+        method: "GET",
         headers,
         signal: abortControllerRef.current?.signal,
         ...options,
       });
-      
+
       if (!response.ok) {
         toast.error(`Failed to fetch data: ${response.status}`);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      
+
       // Cache the result
       cache.set(cacheKey, result);
       setData(result);
       return result;
     } catch (err) {
-      if (err.name === 'AbortError') {
+      if (err.name === "AbortError") {
         return; // Request was cancelled
       }
-      toast.error('Failed to load data');
+      toast.error("Failed to load data");
       setError(err.message);
       throw err;
     } finally {

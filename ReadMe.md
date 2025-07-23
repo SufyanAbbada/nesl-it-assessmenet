@@ -85,7 +85,7 @@ This is a lightweight **React Single Page Application** built using **Vite** (no
 - ✅ **Login page** — authenticates via `/login` and stores JWT in memory using React Context
 - ✅ **Feed page** — displays posts using `/feed` endpoint with infinite scroll
 - ✅ **Custom hook (`useApi`)** — handles fetching, JSON parsing, loading states, error handling, and result caching to prevent unnecessary re-fetches
-- ✅ **Smooth infinite scroll** — loads 10 more posts as the user scrolls down
+- ✅ **Smooth infinite scroll (`useInfiniteScroll`)** — loads 10 more posts as the user scrolls down
 - ✅ Clean state and component logic with optimized rendering
 
 ## How to Run the React App
@@ -96,6 +96,7 @@ This is a lightweight **React Single Page Application** built using **Vite** (no
 4. Run the following commands:
 
 ```bash
+cd web
 npm install
 npm start
 ```
@@ -129,7 +130,7 @@ You can then access the app in your browser.
 
 ## Notes
 
-- ⚙️ This project was built from scratch using **Vite**, not Create React App.
+- ⚙️ This project was built using **Vite**.
 - 💅 No UI libraries were used — built with pure JSX and custom CSS.
 - 🧩 The app is modular, clean, and suitable for building scalable feed-based interfaces.
 

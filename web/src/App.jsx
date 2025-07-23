@@ -1,9 +1,14 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import LoginForm from './components/LoginForm';
-import Feed from './components/Feed';
-import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
+import LoginForm from "./components/LoginForm";
+import Feed from "./components/Feed";
+import ProtectedRoute from "./components/ProtectedRoute";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import "./App.css";
 
 function App() {
   return (
@@ -12,13 +17,13 @@ function App() {
         <div className="app">
           <Routes>
             <Route path="/login" element={<LoginForm />} />
-            <Route 
-              path="/feed" 
+            <Route
+              path="/feed"
               element={
                 <ProtectedRoute>
                   <Feed />
                 </ProtectedRoute>
-              } 
+              }
             />
             <Route path="/" element={<Navigate to="/feed" replace />} />
             <Route path="*" element={<Navigate to="/feed" replace />} />

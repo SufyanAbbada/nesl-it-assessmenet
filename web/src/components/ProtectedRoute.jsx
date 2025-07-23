@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { Toaster } from 'react-hot-toast';
-import PropTypes from 'prop-types';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
