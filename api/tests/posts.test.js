@@ -10,11 +10,11 @@ describe("DELETE /posts/:id", () => {
   // Test: Admin should be able to delete a post
   it("should allow admin to delete a post", async () => {
     const res = await request(app)
-      .delete("/posts/123")
+      .delete("/posts/p1")
       .set("Authorization", `Bearer ${adminToken}`);
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual({ message: "Post 123 deleted." });
+    expect(res.body).toEqual({ message: "Post p1 deleted." });
   });
 
   // Test: Regular user should not be allowed to delete a post

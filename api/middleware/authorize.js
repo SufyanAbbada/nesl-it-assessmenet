@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRET = "SOME_SECRET_KEY_123"; // In production, store this in an environment variable
+const SECRET = process.env.JWT_SECRET;
 
 // Middleware factory that checks JWT and user role
 module.exports = function authorize(allowedRoles) {

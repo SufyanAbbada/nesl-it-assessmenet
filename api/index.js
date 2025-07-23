@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Import custom modules
 const postsRouter = require("./routes/posts");
@@ -40,13 +42,10 @@ app.post("/login", loginLimiter, (req, res) => {
 app.use("/posts", postsRouter); // Routes for post deletion (admin only)
 app.use("/feed", feedRouter); // Routes for paginated post feed (user/admin)
 
-// Start server if not in test environment
-if (process.env.NODE_ENV !== "test") {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 // Export app for testing
 module.exports = app;
